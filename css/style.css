@@ -1,0 +1,534 @@
+@charset "UTF-8";
+:root {
+  --main-font: "Yuji Syuku", serif;
+  --font-color: #231815;
+  --subfont-color: rgb(230, 220, 210);
+  --main-color: rgb(255, 246, 241);
+  --sub-color: #ccc;
+}
+
+a:link {
+  color: var(--font-color);
+  text-decoration: none;
+}
+
+a:visited {
+  color: var(--font-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: orange;
+}
+
+a:active {
+  color: crimson;
+}
+
+html,
+body {
+  /* 画面の高さに固定してはみ出しを隠す */
+  height: 100%;
+  overflow: hidden;
+  /* スクロールによるバウンス（バネのような動き）を防止 */
+  position: fixed;
+  width: 100%;
+}
+
+#scroll-container {
+  touch-action: pan-y;
+  height: 100dvh; /* 画面の高さに合わせる */
+  overflow-y: auto; /* 縦スクロールを許可 */
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; /* iOSでのスクロールを滑らかにする */
+}
+
+body {
+  /* 1. ブラウザが最初から持っている8px程度の余白を消す */
+  margin: 0;
+  padding: 0;
+
+  /* 2. 100dvw ではなく 100% にする */
+  width: 100%;
+
+  /* 念の為の保険：横へのはみ出しを強制的に隠す */
+  overflow-x: hidden;
+}
+
+.header {
+  height: 10dvh;
+  width: 100dvw;
+  position: fixed;
+  /* background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)); */
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* 垂直方向中央揃え */
+  font-family: var(--main-font);
+  z-index: 10;
+}
+
+.nav-items {
+  margin-right: 5%;
+  width: 60%;
+  display: flex;
+  justify-content: space-around;
+}
+
+/* メニューのテキスト */
+.nav-item {
+  /* writing-mode: vertical-rl;  */
+  text-decoration: none;
+  color: var(--font-color);
+  font-weight: bold;
+  font-size: clamp(0.7rem, 2dvw, 1rem);
+  letter-spacing: 0.2em; /* 文字間隔 */
+  flex-shrink: 0; /* 画面が狭くなっても文字は潰さない */
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3); /* 視認性向上のための微かな影 */
+}
+
+.logo-area {
+  width: 150px;
+  height: 100px;
+  margin-left: 20px;
+  margin-right: 20px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-image: url(../images/logo.png);
+  background-position: center;
+  background-size: contain;
+  /* background-repeat: no-repeat; */
+}
+
+.logo-area img {
+  width: 100%;
+  height: auto;
+}
+
+#hero-ctt {
+  position: relative;
+  height: 100dvh;
+  width: 100dvw;
+  background-image: url(../images/backimg.jpeg);
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.top-txt {
+  position: absolute;
+  top: 20dvh;
+  width: 50vw;
+  height: 100px;
+  background-image: url(../images/txt1.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 5;
+}
+
+.hero-txt {
+  position: absolute;
+  top: 37dvh;
+  left: 9dvw;
+  width: auto;
+  height: 100dvh;
+  writing-mode: vertical-rl;
+  font-size: clamp(1.5rem, 4dvw, 2.5rem);
+  font-family: var(--main-font);
+  color: var(--font-color);
+  z-index: 5;
+}
+
+.qrcode-box {
+  position: absolute;
+  top: 37dvh;
+  right: 4dvw;
+  padding: 1dvw;
+  aspect-ratio: 1/1;
+  height: clamp(200px, 30dvh, 500px);
+  border-radius: 10px;
+  background-color: #fff;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.qrcode-txt {
+  height: 20%;
+  font-size: 100%;
+  font-family: var(--main-font);
+  color: var(--font-color);
+}
+
+#qrcode {
+  height: 60%;
+  aspect-ratio: 1/1;
+}
+
+/* QRコード画像自体をレスポンシブにする */
+#qrcode img,
+#qrcode canvas {
+  height: 100% !important; /* 親枠に合わせて横幅いっぱい */
+  width: auto !important; /* 高さは自動調整 */
+}
+
+#modal-overlay {
+  display: none; /* 最初は隠す */
+  position: fixed; /* 画面に固定 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* 半透明の黒 */
+  z-index: 1000; /* 最前面に表示 */
+
+  /* 中身を中央寄せにする設定 */
+  justify-content: center;
+  align-items: center;
+}
+
+/* クラスがついた時に表示（Flexboxにして中央寄せを有効化） */
+#modal-overlay.active {
+  display: flex;
+}
+
+/* ポップアップ本体（白い箱） */
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 90%; /* スマホではみ出さないように */
+  width: 300px; /* 基本の幅 */
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  font-size: 0.8rem;
+}
+
+.modal-txt {
+  padding: 20px;
+}
+
+.modal-ttl {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.device-ttl {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+@media (orientation: landscape) {
+  /* 横画面の時だけ、クリックを無効化する */
+  .qrcode-box {
+    pointer-events: none;
+  }
+}
+@media (orientation: portrait) {
+  .qrcode-box {
+    cursor: pointer;
+    top: 40dvh;
+    right: 9dvw;
+    padding: 1dvw;
+    aspect-ratio: 1/2;
+    height: clamp(100px, 20dvh, 500px);
+    border-radius: 10px;
+    background-color: #fff;
+    z-index: 5;
+    justify-content: center;
+  }
+
+  .qrcode-txt {
+    height: auto;
+    margin: auto;
+    writing-mode: vertical-rl;
+    font-size: 100%;
+  }
+
+  #qrcode {
+    display: none;
+  }
+
+  .top-txt {
+    width: 80vw;
+  }
+  .hero-txt {
+    top: 40dvh;
+  }
+  .nav-items {
+    display: none;
+  }
+}
+
+#main-ctt {
+  height: 600px;
+  width: 100dvw;
+
+  background-image: url(../images/Image_fx.png);
+  background-position: center;
+  background-size: cover;
+}
+
+.gradient-overlay {
+  /* 画面全体に広げる */
+  width: 100%;
+  height: 100%;
+  padding-bottom: 10%;
+  /* radial-gradient(形状 サイズ at 中心位置, 色1 停止位置, 色2 停止位置)
+     ellipse: 楕円形に指定
+     at center: 画面の真ん中から開始
+  */
+  background-color: rgba(58, 58, 58, 0.5);
+}
+
+.main-txt {
+  margin: auto;
+  line-height: 5rem;
+  text-align: center;
+  font-family: var(--main-font);
+  color: var(--subfont-color);
+  font-size: clamp(20px, 3dvw, 30px);
+}
+
+#news-ctt {
+  width: 100%;
+  height: 50dvh;
+  padding-top: 10dvh;
+  padding-bottom: 10dvh;
+  padding-left: 20%;
+  padding-right: 20%;
+  background-color: #fff;
+  display: flex;
+  font-family: var(--main-font);
+  color: var(--font-color);
+}
+
+.news-ttl {
+  width: 20%;
+  line-height: 30dvh;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.news-txt {
+  height: 100%;
+  flex-grow: 1;
+  margin: auto;
+  border-left: 2px dotted var(--sub-color);
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  padding-left: 20px;
+}
+
+#menu-ctt {
+  padding-bottom: 20dvh;
+  height: 120dvh;
+  width: 100dvw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-ttl {
+  margin: auto;
+  font-size: clamp(20px, 3dvw, 30px);
+  font-family: var(--main-font);
+  color: var(--font-color);
+}
+
+#info-ctt {
+  padding-bottom: 20dvh;
+  height: 120dvh;
+  width: 100dvw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-ttl {
+  margin: auto;
+  height: 5dvh;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(20px, 3dvw, 30px);
+  font-family: var(--main-font);
+  color: var(--font-color);
+}
+
+.info-container {
+  height: 60dvh;
+  width: clamp(200px, 80dvw, 800px);
+  margin: auto;
+  display: flex;
+}
+.info-item {
+  padding: 5%;
+  width: 50%;
+  height: 100%;
+  font-family: var(--main-font);
+  font-size: clamp(1px, 1.5dvw, 15px);
+  color: var(--font-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.info-item img {
+  width: 80%;
+  height: auto;
+}
+.info-logo-txt {
+  text-align: center;
+  width: 100%;
+}
+.info-txt {
+  text-align: center;
+  width: 100%;
+}
+.info-map {
+  width: 50%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.info-map iframe {
+  border-radius: 10px;
+}
+
+#footer {
+  padding-top: 8dvh;
+  height: 20vh;
+  width: 100dvw;
+  text-align: center;
+  font-size: clamp(5px, 2dvw, 15px);
+  color: var(--subfont-color);
+  background-color: var(--font-color);
+  font-family: var(--main-font);
+}
+
+@media (orientation: portrait) {
+  #news-ctt {
+    width: 100%;
+    height: 30dvh;
+    display: block;
+  }
+  .news-ttl {
+    text-align: center;
+    width: 100%;
+    height: 10dvh;
+    line-height: 10dvh;
+    border-bottom: 2px dotted var(--sub-color);
+  }
+  .news-txt {
+    padding-top: 1dvh;
+    height: 20vh;
+    margin: auto;
+    border: none;
+  }
+  .info-container {
+    height: 80dvh;
+  }
+  .info-container {
+    flex-direction: column;
+  }
+  .info-item {
+    width: 100%;
+    height: 50%;
+    font-size: clamp(10px, 2dvw, 20px);
+  }
+  .info-item img {
+    width: 60%;
+    height: auto;
+  }
+  .info-map {
+    width: 100%;
+    height: 50%;
+  }
+  #footer {
+    padding-top: 4dvh;
+    height: 10dvh;
+  }
+}
+
+.menu-page1,
+.menu-page2,
+.menu-page3 {
+  height: 100%;
+  width: 100%;
+  padding: 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-img {
+  width: 100%;
+  height: 30%;
+  margin: auto;
+}
+
+.menu-page1 .menu-img {
+  background-image: url(../images/surume.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.menu-page2 .menu-img {
+  background-image: url(../images/beef.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.menu-page3 .menu-img {
+  background-image: url(../images/nuts.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.menu-txt-ttl {
+  width: 100%;
+  height: 10%;
+  margin: auto;
+  text-align: center;
+  font-family: var(--main-font);
+  color: var(--font-color);
+  font-size: 2rem;
+}
+
+.menu-txt {
+  width: 100%;
+  height: 30%;
+  margin: auto;
+  text-align: center;
+  font-family: var(--main-font);
+  color: var(--font-color);
+  font-size: 1rem;
+}
+
+.menu-btn {
+  width: 50%;
+  height: 50px;
+  border-radius: 25px;
+  line-height: 50px;
+  font-size: 1rem;
+  font-family: var(--main-font);
+  margin: auto;
+  text-align: center;
+  border: 2px solid var(--font-color);
+}
+
+.menu-btn:hover {
+  background-color: var(--main-color);
+}

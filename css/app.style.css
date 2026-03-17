@@ -1,0 +1,803 @@
+@charset "UTF-8";
+
+*:focus {
+  outline: none;
+}
+
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
+:root {
+  --main-font: "Yuji Syuku", serif;
+  --font-color: #231815;
+  --main-color: rgb(255, 246, 241);
+  --sub-color: #ccc;
+  --subfont-color: rgb(230, 220, 210);
+  --top-color: #e47272;
+  --back-color: #f9f9f9;
+}
+
+a:link {
+  color: var(--font-color);
+  text-decoration: none;
+}
+
+a:visited {
+  color: var(--font-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: orange;
+}
+
+a:active {
+  color: crimson;
+}
+
+html,
+body {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+  /* background-color: var(--back-color); */
+}
+
+/* ページエリアの共通設定 */
+.page-content {
+  padding-bottom: 20px;
+  display: none; /* 基本は隠す */
+  width: 100%;
+  height: 100%;
+  /* overflow-y: auto;
+  overflow-x: hidden; */
+  animation: fadeIn 0.3s ease; /* フワッと表示 */
+}
+
+/* アクティブなページだけ表示 */
+.page-content.active {
+  display: block;
+}
+
+/* フェードインアニメーション */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === 下部ナビゲーション === */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70px; /* 少し高さを確保 */
+  background: #ffffff;
+  display: flex;
+  justify-content: space-around; /* 均等配置 */
+  align-items: center;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 20px 20px 0 0;
+  z-index: 1000;
+}
+
+/* ナビボタン */
+.nav-btn {
+  background: none;
+  border: none;
+  flex-grow: 1; /* 横幅いっぱいに広げる */
+  height: 100%;
+  display: flex;
+  flex-direction: column; /* 画像と文字を縦に並べる */
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #999; /* 非アクティブ時の文字色 */
+  font-size: 10px;
+  transition: all 0.2s;
+}
+
+/* アイコン画像のサイズ設定 */
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+  object-fit: contain;
+  opacity: 0.5; /* 非アクティブ時は少し薄くする */
+  transition: opacity 0.2s;
+}
+
+.nav-btn.active .nav-icon {
+  opacity: 1;
+  filter: invert(67%) sepia(60%) saturate(3216%) hue-rotate(316deg) brightness(98%) contrast(81%);
+}
+
+.nav-btn:active {
+  background-color: #f0f0f0;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+}
+
+#home {
+  padding-top: 300px;
+  position: relative;
+  background-color: var(--back-color);
+}
+
+.barcode-area {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 250px;
+  background-color: #fff;
+  border-radius: 0 0 15px 15px;
+  padding: 30px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.home-header {
+  position: absolute;
+  padding: 50px 10px 0 10px;
+  top: 200px;
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--top-color);
+  z-index: 3;
+}
+
+.point-box {
+  width: 60%;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-align: center;
+  line-height: 50px;
+  box-shadow: 2px 2px 4px inset #ccc;
+  background-color: #fff;
+}
+
+.app-point-link,
+.app-point-link {
+  width: 50px;
+  aspect-ratio: 1/1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.point-link-icon {
+  width: 45px;
+  aspect-ratio: 1/1;
+  flex-shrink: 0;
+  background-image: url(../images/renkei-point.svg);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.qrcode-icon {
+  width: 45px;
+  aspect-ratio: 1/1;
+  flex-shrink: 0;
+  background-image: url(../images/qrcode-icon.svg);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.icon-txt {
+  font-size: 0.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.home-ctt {
+  padding-top: 50px;
+  margin-top: 30px;
+  width: 100%;
+  height: calc(100dvh - 300px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-news {
+  margin: 10px 0;
+  width: 80%;
+  min-width: 300px;
+  aspect-ratio: 2/1;
+  flex-shrink: 0;
+  background-color: var(--sub-color);
+}
+
+.home-news img {
+  width: 100%;
+  height: auto;
+}
+
+.stamp-ctt {
+  padding: 20px;
+  height: 300px;
+  width: 100%;
+  background-color: var(--top-color);
+}
+
+.stamp-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stamp-card-radius {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  top: 50px;
+  right: -10px;
+  background-color: var(--top-color);
+}
+
+.stamp-ttl {
+  margin: 20px;
+  height: 20px;
+  width: 300px;
+  text-align: center;
+  font-family: var(--main-font);
+  color: var(--font-color);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.stamp-txt {
+  margin: 10px;
+  height: 40px;
+  width: 300px;
+  text-align: center;
+  font-family: var(--main-font);
+  color: var(--font-color);
+  font-size: 0.8rem;
+}
+
+.stamp-table {
+  width: 300px;
+  height: 150px;
+  border-spacing: 10px;
+  border-radius: 10px;
+  border: 2px dotted var(--font-color);
+}
+
+.stamp-table td {
+  width: 50px;
+  height: 40px;
+  background-image: url(../images/stamp-icon.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* --- ベースのスタイル --- */
+.coupon-ctt {
+  width: 100%;
+  height: calc(100vh - 300px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  gap: 15px; /* アイテムごとの間隔 */
+  background-color: var(--main-color);
+  color: var(--font-color);
+}
+
+/* --- クーポンアイテムの器 --- */
+.coupon-item {
+  width: 90%;
+  min-width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column; /* 縦並び */
+}
+
+/* --- カード本体 --- */
+.coupon-card {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+
+  /* タップ時のハイライト削除 */
+  -webkit-tap-highlight-color: transparent;
+}
+
+.coupon-content {
+  padding: 20px;
+}
+.coupon-img {
+  width: 100%;
+  aspect-ratio: 2/1;
+}
+.coupon-img img {
+  width: 100%;
+  height: auto;
+}
+.coupon-title {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.coupon-desc {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* --- ボタンエリア（初期状態：非表示） --- */
+.coupon-action {
+  display: none; /* 存在を消す */
+  opacity: 0; /* 透明にしておく */
+
+  width: 100%;
+  background-color: transparent; /* 背景なし、または薄いグレーなど */
+  padding: 10px 0;
+  text-align: center;
+}
+
+/* --- activeクラスがついた時のスタイル --- */
+.coupon-item.active .coupon-action {
+  display: block; /* 枠を確保（パッと開く） */
+
+  /* ふわっと表示させるアニメーション */
+  animation: fadeInAction 0.4s ease forwards;
+}
+
+/* フェードインのアニメーション定義 */
+@keyframes fadeInAction {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px); /* オプション: 少し上から降りてくる演出を入れると自然 */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- ボタンの装飾 --- */
+.use-btn {
+  width: 100%; /* 幅いっぱい */
+  height: 50px;
+  background-color: #ff4757;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 4px 6px rgba(255, 71, 87, 0.3);
+}
+
+.bottom-space {
+  width: 100%;
+  flex-shrink: 0;
+  height: 100px;
+}
+
+#product {
+  background-color: #fff;
+}
+
+.tab-ttl {
+  width: 100%;
+  height: 80px;
+  font-family: var(--main-font);
+  color: var(--font-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  line-height: 80px;
+}
+
+/* --- タブナビゲーション --- */
+.tab-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 50px;
+  position: relative;
+  z-index: 10;
+}
+
+.tab-item {
+  position: relative;
+  flex: 1;
+  height: 50px; /* タブの高さ */
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  overflow: visible;
+}
+
+/* タブのテキスト */
+.tab-text {
+  position: relative;
+  z-index: 2; /* SVGより手前に */
+  font-family: var(--main-font);
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--font-color);
+  pointer-events: none;
+}
+
+/* SVGタブ背景の設定 */
+.tab-shape {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: transform 0.2s ease;
+}
+
+/* SVGのパス（塗りつぶし色） */
+.tab-shape path {
+  transition:
+    fill 0.3s ease,
+    stroke 0.3s ease;
+  stroke: #eee; /* 薄い枠線 */
+  stroke-width: 1px;
+}
+
+/* --- 状態変化（アクティブ/非アクティブ） --- */
+
+/* 非アクティブなタブ */
+.tab-item .tab-shape path {
+  fill: #ffffff; /* 白 */
+}
+
+/* アクティブなタブ */
+.tab-item.active {
+  z-index: 3; /* 一番手前に表示 */
+}
+
+.tab-item.active .tab-shape {
+  transform: scale(1.15); /* アクティブ時は少し大きく */
+  transform-origin: bottom center;
+}
+
+.tab-item.active .tab-shape path {
+  fill: #fff5f2; /* コンテンツエリアと同じ色 */
+  stroke: none; /* アクティブ時は枠線を消して一体化させる */
+}
+
+/* --- コンテンツエリア --- */
+.content-area {
+  background-color: #fff5f2; /* 薄いピンク */
+  background: linear-gradient(to bottom, #fff5f2, #fff 35px);
+  flex-grow: 1;
+  padding: 20px;
+  position: relative;
+  z-index: 2; /* タブの下部を隠さないように調整 */
+}
+
+/* パネル切り替えロジック */
+.content-panel {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.content-panel.active {
+  display: block;
+}
+
+.content-index {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.content-index-txt {
+  width: 70%;
+  font-size: 1rem;
+  font-family: var(--main-font);
+  color: var(--font-color);
+}
+
+.content-index-txt span {
+  font-size: 0.7rem;
+}
+
+.content-index-sort {
+  width: 50px;
+  aspect-ratio: 2/1;
+  flex-shrink: 0;
+  text-align: center;
+  line-height: 25px;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  font-family: var(--main-font);
+  color: var(--font-color);
+  background-color: #fff;
+  border: 2px solid var(--sub-color);
+}
+
+/* グリッドレイアウト（画像の四角い要素） */
+.grid-container {
+  padding: 10px 10px 50px 10px;
+  height: calc(100vh - 250px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.grid-item {
+  aspect-ratio: 1 / 2;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.35);
+}
+
+.grid-img {
+  width: 100%;
+  height: 50%;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+}
+
+.grid-img img {
+  width: 110%;
+  height: 110%;
+  object-position: top;
+  object-fit: cover;
+}
+
+.grid-txtarea {
+  width: 100%;
+  height: 50%;
+  padding: 10px;
+  border-radius: 0 0 8px 8px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  font-family: var(--main-font);
+  color: var(--font-color);
+  background-color: #fff;
+}
+
+.grid-ttl {
+  height: 100%;
+  width: auto;
+  font-size: 0.75rem;
+  font-weight: bold;
+  writing-mode: vertical-rl;
+}
+
+.grid-txt {
+  height: 100%;
+  width: auto;
+  font-size: 0.6rem;
+  writing-mode: vertical-rl;
+  text-align: right;
+}
+
+.grid-txt span {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* フェードインアニメーション */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#shop {
+  background-color: var(--back-color);
+}
+
+#info-ctt {
+  height: 90%;
+  width: 100%;
+  display: flex;
+  overflow-y: hidden;
+  flex-direction: column;
+  text-align: center;
+}
+
+.info-ttl {
+  margin-top: 10%;
+  height: 5%;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(20px, 3dvw, 30px);
+  font-family: var(--main-font);
+  color: var(--font-color);
+}
+
+.info-container {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.info-item {
+  margin: 5% 0;
+  width: 100%;
+  height: 50%;
+  font-family: var(--main-font);
+  color: var(--font-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.info-item img {
+  width: 40%;
+  height: auto;
+}
+.info-logo-txt {
+  font-size: 1rem;
+  text-align: center;
+  width: 100%;
+}
+.info-txt {
+  font-size: 0.8rem;
+  text-align: center;
+  width: 100%;
+}
+.info-map {
+  margin: 2%;
+  width: 96%;
+  height: 50%;
+  border-radius: 10px;
+}
+
+.info-map iframe {
+  border-radius: 10px;
+}
+
+#account {
+  padding-bottom: 70px;
+  background-color: var(--back-color);
+}
+
+.account-top-img {
+  padding-top: 50px;
+  width: 20vw;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background-image: url(../images/account-icon.png);
+  background-position: center;
+  background-size: cover;
+}
+
+.account-top-sts {
+  padding-top: 10px;
+  height: 5%;
+  width: auto;
+  text-align: center;
+  font-family: var(--main-font);
+  color: var(--font-color);
+}
+
+.account-box {
+  list-style: none;
+  padding-left: 0;
+  width: 100%;
+  height: auto;
+  padding: 0 15%;
+  font-family: var(--main-font);
+  color: var(--font-color);
+  font-size: 1.2rem;
+}
+
+.account-menu {
+  position: relative;
+  padding: 0;
+  padding-left: 40px;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-bottom: 2px dotted var(--sub-color);
+}
+
+.account-menu::before {
+  content: "";
+  /* 画像の配置設定 */
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-35%);
+
+  /* 画像のサイズとパス */
+  width: 25px;
+  height: 25px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.account-box li:nth-child(1)::before {
+  background-image: url(../images/account-toroku.svg);
+}
+.account-box li:nth-child(2)::before {
+  background-image: url(../images/account-bell.svg);
+}
+.account-box li:nth-child(3)::before {
+  background-image: url(../images/account-secu.svg);
+}
+.account-box li:nth-child(4)::before {
+  background-image: url(../images/account-set.svg);
+}
+.account-box li:nth-child(5)::before {
+  background-image: url(../images/account-renkei.svg);
+}
+.account-box li:nth-child(6)::before {
+  background-image: url(../images/account-help.svg);
+}
+.account-box li:nth-child(7)::before {
+  background-image: url(../images/account-policy.svg);
+}
+.account-box li:nth-child(8)::before {
+  background-image: url(../images/account-kiyaku.svg);
+}
+
+.home-ctt,
+.coupon-ctt,
+.grid-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.home-ctt::-webkit-scrollbar,
+.coupon-ctt::-webkit-scrollbar,
+.grid-container::-webkit-scrollbar {
+  display: none;
+}

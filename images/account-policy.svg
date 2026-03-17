@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_レイヤー_8" data-name="レイヤー_8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 541.71 606.78">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f9f9f9;
+        stroke: #e47272;
+        stroke-width: 19.33px;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        stroke-linejoin: round;
+      }
+
+      .cls-4 {
+        fill: #231815;
+      }
+
+      .cls-2 {
+        stroke-linecap: round;
+        stroke-width: 27.82px;
+      }
+
+      .cls-2, .cls-3 {
+        fill: none;
+        stroke: #231815;
+      }
+
+      .cls-3 {
+        stroke-width: 29.1px;
+      }
+    </style>
+  </defs>
+  <polygon class="cls-3" points="461.71 392.75 461.71 16.25 80.71 16.25 80.71 496.25 357.21 496.25 357.21 392.75 461.71 392.75"/>
+  <polygon class="cls-3" points="461.71 392.75 357.21 392.75 357.21 496.25 461.71 392.75"/>
+  <line class="cls-2" x1="166.34" y1="109.75" x2="377.41" y2="109.75"/>
+  <line class="cls-2" x1="166.34" y1="178.75" x2="377.41" y2="178.75"/>
+  <line class="cls-2" x1="166.34" y1="247.75" x2="282.71" y2="247.75"/>
+  <path class="cls-1" d="M506.05,443.83l-106.39,62.33-106.96-62.33v-178.18s39,18.24,52,18.24c13.67,0,54.68-36.49,54.68-36.49,0,0,40.27,36.49,54.42,36.49,12.52,0,52.26-18.24,52.26-18.24v178.18Z"/>
+  <circle class="cls-4" cx="399.37" cy="352.39" r="22.24"/>
+  <polygon class="cls-4" points="416.18 422.9 382.01 422.9 388.4 363.24 409.8 363.24 416.18 422.9"/>
+</svg>

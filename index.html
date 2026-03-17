@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>乙旨味</title>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="apple-touch-icon" href="./icon.small.png" />
+    <link rel="icon" href="./icon.small.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v6.2.0/css/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/common.css" />
+    <link rel="stylesheet" href="/css/a-modern-css-reset.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  </head>
+  <body>
+    <div id="scroll-container">
+      <header class="header">
+        <div class="logo-area">
+          <a href="#hero-ctt"><img src="/images/logo.png" alt="logo" /></a>
+        </div>
+
+        <div class="nav-items">
+          <a href="#main-ctt" class="nav-item">こだわり</a>
+
+          <a href="#news-ctt" class="nav-item">お知らせ</a>
+
+          <a href="#menu-ctt" class="nav-item">商品情報</a>
+
+          <a href="#info-ctt" class="nav-item">店舗情報</a>
+
+          <a href="#" class="nav-item">採用情報</a>
+        </div>
+      </header>
+      <button class="hamburger" id="js-hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav-menu" id="js-nav">
+        <ul>
+          <li><a href="#main-ctt">こだわり</a></li>
+          <li><a href="#news-ctt">お知らせ</a></li>
+          <li><a href="#menu-ctt">商品情報</a></li>
+          <li><a href="#info-ctt">店舗情報</a></li>
+          <li><a href="#">採用情報</a></li>
+        </ul>
+      </nav>
+
+      <div class="overlay" id="js-overlay"></div>
+      <div id="hero-ctt">
+        <div class="shape-container">
+          <svg id="bell-curve-svg">
+            <path id="bell-path" class="bell-shape"></path>
+          </svg>
+        </div>
+        <div class="top-txt"></div>
+        <div class="hero-txt">自社製造<br />保存料無添加</div>
+        <div class="qrcode-box">
+          <div class="qrcode-txt">アプリはこちら</div>
+          <div id="qrcode"></div>
+        </div>
+        <div id="modal-overlay">
+          <div class="modal-content">
+            <div class="modal-txt">
+              <div class="modal-ttl">アプリの入れ方</div>
+              <div class="device-ttl">iphoneの方</div>
+              画面の下にある<i class="fa-solid fa-share-from-square"></i>を開いて、<br />
+              ホーム画面に追加をタップ<br />
+              <div class="device-ttl">androidの方</div>
+              chromeの右上にある&#xFE19;を開いて、<br />
+              ホーム画面に追加をタップ
+            </div>
+            <button id="close-btn">閉じる</button>
+          </div>
+        </div>
+        <div class="gallery" id="gallery">
+          <div class="item"><img src="images/surume.png" alt="Photo 1" /></div>
+          <div class="item"><img src="images/beef.png" alt="Photo 2" /></div>
+          <div class="item"><img src="images/nuts.png" alt="Photo 3" /></div>
+        </div>
+      </div>
+      <div id="main-ctt">
+        <div class="gradient-overlay">
+          <div class="main-txt"><br />景気づけにも、<br />ご褒美にも、<br />出会いにも、別れにも、<br />お酒を飲むなら、<br />「乙旨味」を添えて。</div>
+        </div>
+      </div>
+      <div id="news-ctt">
+        <div class="news-ttl">おしらせ</div>
+        <div class="news-txt">開店予定日について▶</div>
+      </div>
+      <div id="menu-ctt">
+        <div class="menu-ttl">商品情報</div>
+        <div class="menu-wrapper">
+          <button class="nav-btn prev-btn" id="prevBtn" aria-label="前へ">❮</button>
+
+          <div class="menu-window">
+            <div class="menu-track" id="menuTrack">
+              <div class="menu-item">
+                <div class="menu-page1">
+                  <div class="menu-img"></div>
+                  <div class="menu-txt-ttl">海鮮</div>
+                  <div class="menu-txt">イカ<br />牡蠣<br />海藻<br />etc...</div>
+                  <div class="menu-btn">詳しくはこちら</div>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-page2">
+                  <div class="menu-img"></div>
+                  <div class="menu-txt-ttl">肉</div>
+                  <div class="menu-txt">牛肉<br />ジビエ<br />馬肉<br />etc...</div>
+                  <div class="menu-btn">詳しくはこちら</div>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-page3">
+                  <div class="menu-img"></div>
+                  <div class="menu-txt-ttl">豆</div>
+                  <div class="menu-txt">ミックスナッツ<br />ドライ豆<br />発酵食品<br />etc...</div>
+                  <div class="menu-btn">詳しくはこちら</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="nav-btn next-btn" id="nextBtn" aria-label="次へ">❯</button>
+
+          <div class="pagination" id="pagination"></div>
+        </div>
+      </div>
+      <div id="info-ctt">
+        <div class="info-ttl">店舗情報</div>
+        <div class="info-container">
+          <div class="info-item">
+            <img src="images/logo.png" />
+            <div class="info-logo-txt">おつまみ専門店</div>
+            <div class="info-txt">
+              開店日時 16:00~23:00（月曜定休日）<br /><br />
+              ○○○県▲▲▲市■■■町✕✕✕<br />TEL 111-222-3333 ( 16:00 -22:00 )<br />
+              FAX 444-555-6666<br />
+              MAIL otsuumami@gmail.com
+            </div>
+          </div>
+          <div class="info-map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3261.5385814106535!2d136.883050975227!3d35.168126657990626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600376de618547db%3A0x76435e49b7e59323!2zSEFM5ZCN5Y-k5bGL!5e0!3m2!1sja!2sjp!4v1770199016920!5m2!1sja!2sjp" width="100%" height="100%" style="border: 0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+        </div>
+      </div>
+      <footer id="footer">@otuumami CG13B182 28 武藤輝</footer>
+    </div>
+    <script src="/js/script.js"></script>
+  </body>
+</html>

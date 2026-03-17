@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>乙旨味</title>
+    <script>
+      // アプリモードじゃなかったら、即座にトップへ飛ばす
+      if (!window.matchMedia("(display-mode: standalone)").matches) {
+        window.location.replace("/index.html");
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+    <link rel="manifest" href="../manifest.json" />
+    <link rel="apple-touch-icon" href="../icon.small.png" />
+    <link rel="icon" href="../icon.small.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/app.style.css" />
+    <link rel="stylesheet" href="/css/app.common.css" />
+    <link rel="stylesheet" href="/css/a-modern-css-reset.css" />
+  </head>
+  <body>
+    <main>
+      <div id="home" class="page-content active">
+        <div class="barcode-area">
+          <div class="barcode-ttl">レジでご提示ください</div>
+
+          <svg id="barcode"></svg>
+
+          <div class="timer-container">
+            <div id="timerBar" class="timer-bar"></div>
+          </div>
+          <p class="refresh-msg">セキュリティのため30秒ごとに更新されます</p>
+        </div>
+        <div class="home-header">
+          <div class="point-box">貯まっているポイント:　　0pt</div>
+          <div class="app-point-link">
+            <div class="point-link-icon"></div>
+            <div class="icon-txt">ポイント連携</div>
+          </div>
+          <div class="app-point-link">
+            <div class="qrcode-icon"></div>
+            <div class="icon-txt">スキャン</div>
+          </div>
+        </div>
+        <div class="home-ctt">
+          <div class="home-news"><img src="/images/survey.png" alt="アンケート" /></div>
+          <div class="home-news"><img src="/images/shellfish.png" alt="貝フェア" /></div>
+          <div class="home-news"><img src="/images/osake.png" alt="乙酒サイト" /></div>
+          <div class="bottom-space"></div>
+        </div>
+      </div>
+
+      <div id="coupon" class="page-content">
+        <div class="stamp-ctt">
+          <div class="stamp-card">
+            <div class="stamp-card-radius"></div>
+            <div class="stamp-ttl">お買い物スタンプカード</div>
+            <table class="stamp-table">
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </table>
+            <div class="stamp-txt">お会計１回につきスタンプ１個<br />10個貯めてお得なクーポンをランダムでゲット!</div>
+          </div>
+        </div>
+        <div class="coupon-ctt">
+          <div class="coupon-item">
+            <div class="coupon-card">
+              <div class="coupon-content">
+                <div class="coupon-img"><img src="/images/100off.png" alt="100円OFFクーポン" /></div>
+                <div class="coupon-title">入会特典 100円OFF</div>
+                <div class="coupon-desc">アカウント登録後3か月の間に一回利用可能</div>
+              </div>
+            </div>
+            <div class="coupon-action">
+              <button class="use-btn" onclick="useCoupon(event, 'coupon1')">クーポンを使用する</button>
+            </div>
+          </div>
+
+          <div class="coupon-item">
+            <div class="coupon-card">
+              <div class="coupon-content">
+                <div class="coupon-img"><img src="/images/kaisou.png" alt="海藻チップスクーポン" /></div>
+                <div class="coupon-title">海藻チップス各種　一個無料</div>
+                <div class="coupon-desc">2026年5月10日まで</div>
+              </div>
+            </div>
+            <div class="coupon-action">
+              <button class="use-btn" onclick="useCoupon(event, 'coupon2')">クーポンを使用する</button>
+            </div>
+          </div>
+
+          <div class="coupon-item">
+            <div class="coupon-card">
+              <div class="coupon-content">
+                <div class="coupon-img"><img src="/images/okaikei.png" alt="5%OFFクーポン" /></div>
+                <div class="coupon-title">お会計から 5% OFF</div>
+                <div class="coupon-desc">2026年5月5日まで</div>
+              </div>
+            </div>
+            <div class="coupon-action">
+              <button class="use-btn" onclick="useCoupon(event, 'coupon3')">クーポンを使用する</button>
+            </div>
+          </div>
+          <div class="bottom-space"></div>
+        </div>
+      </div>
+
+      <div id="product" class="page-content">
+        <div class="curve-header product-curve">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,0 L100,0 L100,100 C75,100 75,20 50,20 C25,20 25,100 0,100 Z"></path>
+          </svg>
+          <div class="tab-ttl">お品書き</div>
+        </div>
+        <nav class="tab-nav">
+          <button class="tab-item active" data-target="content-seafood">
+            <span class="tab-text">海鮮</span>
+            <svg class="tab-shape" viewBox="0 0 100 60" preserveAspectRatio="none">
+              <path d="M0,60 C20,60 20,10 50,10 S80,60 100,60 Z" />
+            </svg>
+          </button>
+
+          <button class="tab-item" data-target="content-meat">
+            <span class="tab-text">肉</span>
+            <svg class="tab-shape" viewBox="0 0 100 60" preserveAspectRatio="none">
+              <path d="M0,60 C20,60 20,10 50,10 S80,60 100,60 Z" />
+            </svg>
+          </button>
+
+          <button class="tab-item" data-target="content-beans">
+            <span class="tab-text">豆</span>
+            <svg class="tab-shape" viewBox="0 0 100 60" preserveAspectRatio="none">
+              <path d="M0,60 C20,60 20,10 50,10 S80,60 100,60 Z" />
+            </svg>
+          </button>
+        </nav>
+
+        <main class="content-area">
+          <div class="content-index">
+            <div class="content-index-txt">各商品を個包装で販売しています。<br /><span>表示価格は一袋20gのお値段です。</span></div>
+            <div class="content-index-sort">ソート</div>
+          </div>
+          <div id="content-seafood" class="content-panel active">
+            <div class="grid-container">
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgs1.png" alt="ホタテ天日干し" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">北海道産<br />ホタテ貝柱の天日干し</div>
+                  <div class="grid-txt">（税込）<span>３６０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgs2.png" alt="スモークオイスター" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">スモークオイスターの<br />ドライ仕立て</div>
+                  <div class="grid-txt">（税込）<span>３００円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgs3.png" alt="炙りエイヒレ" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">炙りエイヒレの<br />トリュフ塩仕立て</div>
+                  <div class="grid-txt">（税込）<span>２４０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgs4.png" alt="サーモンハラス" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">サーモンハラスの<br />ハーブジャーキー</div>
+                  <div class="grid-txt">（税込）<span>２８０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgs5.png" alt="ホタルイカ" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">ホタルイカの姿干し<br />（いしる漬け）</div>
+                  <div class="grid-txt">（税込）<span>３２０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgs6.png" alt="カラスミ" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">カラスミの<br />厚切りスライス</div>
+                  <div class="grid-txt">（税込）<span>２０００円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgs7.png" alt="深海魚" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">深海魚のアヒージョ風<br />骨せんべい</div>
+                  <div class="grid-txt">（税込）<span>２００円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgs8.png" alt="雲丹" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">極上雲丹の<br />パリパリ濃厚チップス</div>
+                  <div class="grid-txt">（税込）<span>４００円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgs9.png" alt="甘海老" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">甘海老の<br />姿焼きせんべい</div>
+                  <div class="grid-txt">（税込）<span>１８０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgs10.png" alt="ホタテバター醤油" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">北海道産ホタテひもの<br />バター醤油カリカリ揚げ</div>
+                  <div class="grid-txt">（税込）<span>１６０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgs11.png" alt="海藻チップス" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">北海道産厳選<br />海藻チップス３種<br />海苔・ひじき・わかめ</div>
+                  <div class="grid-txt">（税込）<span>２００円</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="content-meat" class="content-panel">
+            <div class="grid-container">
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgm1.png" alt="牛タン" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">厚切り牛タンの<br />黒胡椒ジャーキー</div>
+                  <div class="grid-txt">（税込）<span>３６０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgm2.png" alt="鶏の炭火焼き風" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">鶏の炭火焼き風<br />ひとくちジャーキー</div>
+                  <div class="grid-txt">（税込）<span>２４０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgm3.png" alt="馬肉" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">特選馬肉の<br />極上燻製ジャーキー</div>
+                  <div class="grid-txt">（税込）<span>４００円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgm4.png" alt="イベリコ豚サラミ" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">イベリコ豚の<br />ひとくち厚切りサラミ</div>
+                  <div class="grid-txt">（税込）<span>４００円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgm5.png" alt="合鴨" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">合鴨の<br />ひとくちスモークジャーキー</div>
+                  <div class="grid-txt">（税込）<span>３００円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgm6.png" alt="鹿肉" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">鹿肉のスパイスジャーキー</div>
+                  <div class="grid-txt">（税込）<span>４４０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgm7.png" alt="うずら肉" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">うずら肉の極上スモーク</div>
+                  <div class="grid-txt">（税込）<span>２８０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgm8.png" alt="黒毛和牛ステーキキューブ" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">Ａ５黒毛和牛の<br />フリーズドライ・<br />ステーキキューブ</div>
+                  <div class="grid-txt">（税込）<span>２０００円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgm9.png" alt="生ハムチーズチュイル" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">パルマ産生ハムと<br />熟成チーズの極薄チュイル</div>
+                  <div class="grid-txt">（税込）<span>３００円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgm10.png" alt="イベリコ豚のポークリンド" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">イベリコ豚のポークリンド</div>
+                  <div class="grid-txt">（税込）<span>２４０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgm11.png" alt="鶏皮" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">国産鶏皮の<br />柚子胡椒パリパリ焼き</div>
+                  <div class="grid-txt">（税込）<span>１６０円</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="content-beans" class="content-panel">
+            <div class="grid-container">
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgb1.png" alt="ミックスナッツ" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">白トリュフ塩の<br />高級ミックスナッツ</div>
+                  <div class="grid-txt">（税込）<span>２４０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgb2.png" alt="そら豆" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">そら豆の<br />ガーリック＆ペッパー揚げ</div>
+                  <div class="grid-txt">（税込）<span>１００円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgb3.png" alt="丹波黒豆" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">丹波黒豆のドライ納豆</div>
+                  <div class="grid-txt">（税込）<span>２００円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgb4.png" alt="ピスタチオ" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">殻ごと燻製したピスタチオ</div>
+                  <div class="grid-txt">（税込）<span>１８０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgb5.png" alt="ひよこ豆" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">ひよこ豆の<br />ファラフェル風スナック</div>
+                  <div class="grid-txt">（税込）<span>１２０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgb6.png" alt="落花生" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">フリーズドライ茹で落花生</div>
+                  <div class="grid-txt">（税込）<span>１６０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgb7.png" alt="レンズ豆" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">レンズ豆の砕きパパド</div>
+                  <div class="grid-txt">（税込）<span>１４０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgb8.png" alt="マカダミアナッツ" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">キャビア塩と金箔を纏った<br />最高級マカダミアナッツ</div>
+                  <div class="grid-txt">（税込）<span>１８００円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgb9.png" alt="焼き枝豆" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">焼き枝豆とパルミジャーノ<br />極薄パリパリせんべい</div>
+                  <div class="grid-txt">（税込）<span>１４０円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgb10.png" alt="" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">濃厚ピスタチオと<br />岩塩のクリスピーサブレ</div>
+                  <div class="grid-txt">（税込）<span>２００円</span></div>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-img"><img src="/images/imgb11.png" alt="" /></div>
+                <div class="grid-txtarea">
+                  <div class="grid-ttl">そら豆と桜えびの<br />サクサクかき揚げ風スナック</div>
+                  <div class="grid-txt">（税込）<span>１６０円</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <div id="shop" class="page-content">
+        <div class="curve-header shop-curve">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,0 L100,0 L100,100 C75,100 75,20 50,20 C25,20 25,100 0,100 Z"></path>
+          </svg>
+          <div class="info-ttl">店舗情報</div>
+        </div>
+        <div id="info-ctt">
+          <div class="info-container">
+            <div class="info-item">
+              <img src="../images/logo.png" />
+              <div class="info-logo-txt">おつまみ専門店</div>
+              <div class="info-txt">
+                開店日時 16:00~23:00（月曜定休日）<br /><br />
+                ○○○県▲▲▲市■■■町✕✕✕<br />TEL 111-222-3333 ( 16:00 -22:00 )<br />
+                FAX 444-555-6666<br />
+                MAIL otsuumami@gmail.com
+              </div>
+            </div>
+            <div class="info-map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3261.5385814106535!2d136.883050975227!3d35.168126657990626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600376de618547db%3A0x76435e49b7e59323!2zSEFM5ZCN5Y-k5bGL!5e0!3m2!1sja!2sjp!4v1770199016920!5m2!1sja!2sjp" width="100%" height="100%" style="border: 0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="account" class="page-content">
+        <div class="curve-header account-curve">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,0 L100,0 L100,100 C75,100 75,20 50,20 C25,20 25,100 0,100 Z"></path>
+          </svg>
+          <div class="account-top-img"></div>
+          <div class="account-top-sts">ゲスト<br />アカウント未登録</div>
+        </div>
+        <ul class="account-box">
+          <li class="account-menu">アカウント設定・登録</li>
+          <li class="account-menu">通知設定</li>
+          <li class="account-menu">セキュリティ</li>
+          <li class="account-menu">基本設定</li>
+          <li class="account-menu">外部連携</li>
+          <li class="account-menu">よくある質問・ヘルプ</li>
+          <li class="account-menu">プライバシーポリシー</li>
+          <li class="account-menu">規約一覧</li>
+        </ul>
+      </div>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-btn active" onclick="switchTab('home', this)">
+        <img src="/images/icon-home.svg" alt="ホーム" class="nav-icon" />
+      </button>
+
+      <button class="nav-btn" onclick="switchTab('coupon', this)">
+        <img src="/images/icon-coupon.svg" alt="クーポン" class="nav-icon" />
+      </button>
+
+      <button class="nav-btn" onclick="switchTab('product', this)">
+        <img src="/images/icon-product.svg" alt="商品" class="nav-icon" />
+      </button>
+
+      <button class="nav-btn" onclick="switchTab('shop', this)">
+        <img src="/images/icon-shop.svg" alt="店舗" class="nav-icon" />
+      </button>
+
+      <button class="nav-btn" onclick="switchTab('account', this)">
+        <img src="/images/icon-account.svg" alt="アカウント" class="nav-icon" />
+      </button>
+    </nav>
+    <script src="/js/app.script.js"></script>
+  </body>
+</html>

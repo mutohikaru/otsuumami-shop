@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+:root {
+  --main-font: "Yuji Syuku", serif;
+  --font-color: #231815;
+  --main-color: rgb(255, 246, 241);
+  --sub-color: #ccc;
+  --top-color: #e47272;
+  --subfont-color: rgb(230, 220, 210);
+}
+
+/* バーコード表示エリア */
+#barcode {
+    width: 100%;
+    height: auto;
+    max-width: 250px;
+    margin-bottom: 10px;
+}
+
+/* タイマーゲージの枠 */
+.timer-container {
+    width: 80%;
+    background-color: #ddd;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+/* 減っていくバーの部分 */
+.timer-bar {
+    height: 100%;
+    background-color: #007bff; /* 青色 */
+    width: 100%;
+    /* なめらかに動くアニメーション設定 */
+    transition: width 1s linear, background-color 0.5s ease;
+}
+
+.refresh-msg {
+    font-size: 12px;
+    color: #666;
+    margin-top: 8px;
+}
+
+.curve-header {
+  position: relative;
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.shop-curve{
+  height: 20dvh;
+}
+
+.account-curve{
+  height: 25dvh;
+}
+
+.product-curve{
+  height: 80px;
+}
+
+/* 背景のSVG設定 */
+.curve-header svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* 文字の後ろに配置 */
+  fill: var(--top-color);
+}

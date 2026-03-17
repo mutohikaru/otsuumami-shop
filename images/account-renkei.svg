@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_レイヤー_6" data-name="レイヤー_6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 541.71 606.78">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #231815;
+      }
+
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 57.53px;
+      }
+
+      .cls-2 {
+        stroke: #e47272;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M118.71,205.25l-73.77,59.79V69.16c0-21.25,17.23-38.48,38.48-38.48h377.51c21.25,0,38.48,17.23,38.48,38.48v88.76"/>
+  <path class="cls-2" d="M425.65,308.46l73.77-59.79v195.88c0,21.25-17.23,38.48-38.48,38.48H83.42c-21.25,0-38.48-17.23-38.48-38.48v-88.76"/>
+</svg>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_レイヤー_8" data-name="レイヤー_8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 541.71 606.78">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #e47272;
+        stroke-width: 29.1px;
+      }
+
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke-linejoin: round;
+      }
+
+      .cls-2 {
+        stroke: #231815;
+        stroke-linecap: round;
+        stroke-width: 27.82px;
+      }
+    </style>
+  </defs>
+  <polygon class="cls-1" points="461.71 392.75 461.71 16.25 80.71 16.25 80.71 496.25 357.21 496.25 357.21 392.75 461.71 392.75"/>
+  <polygon class="cls-1" points="461.71 392.75 357.21 392.75 357.21 496.25 461.71 392.75"/>
+  <line class="cls-2" x1="166.34" y1="109.75" x2="377.41" y2="109.75"/>
+  <line class="cls-2" x1="166.34" y1="178.75" x2="377.41" y2="178.75"/>
+  <line class="cls-2" x1="166.34" y1="247.75" x2="282.71" y2="247.75"/>
+</svg>
