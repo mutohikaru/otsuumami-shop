@@ -309,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ID 'qrcode' の要素の中にQRコードを生成
 new QRCode(document.getElementById("qrcode"), {
-  text: "https://otsuumami-shop.nhs30092.workers.dev/", // 埋め込みたいURLやテキスト
+  text: "https://mutohikaru.github.io/otsuumami-shop/", // 埋め込みたいURLやテキスト
   width: 400,
   height: 400,
   colorDark: "#000000", // ドットの色
